@@ -52,13 +52,22 @@ app.route('/expert/:ename')
     })
     .patch((req, res) => {
         Expert.update(
-            { task_name: req.params.ename },
+            { expert_name: req.params.ename },
             { $set: req.body },
             (err) => {
                 if (!err) { res.send('Successfully updated! ') }
                 else res.send(err)
             }
         )
+    })
+    .delete((req, res) => {
+        Expert.deleteOne(
+            { task_name: req.params.ename },
+            { $set: req.body },
+            (err) => {
+                if (err) { res.send(err) }
+                else { res.send('Successfully deleted this experts!') }
+            })
     })
 
 app.listen(process.env.PORT || 8000, () => {
